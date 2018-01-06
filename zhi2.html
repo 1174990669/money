@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0">
+	<title>转账付款</title>
+	<style>
+		html,body,h3,p,h5{margin: 0;padding: 0;}
+		/*section{background:#f1f1f3; height: 100vh;}*/
+		input{outline:none;}
+		header{width: 100%;background:#232845;height: 44px;}
+		header p{width: 100%;text-align: center;font-size:1.2rem;color: #fff;height: 44px;line-height: 44px;}
+		#jianpan{border-top: 2px solid #dbd9e4;display: none;}
+		.div-img{text-align: center;padding: 30px 0 20px 0;}
+		.div-img img{border-radius: 50%;width: 21%;height: 21%;margin-bottom:6px;}
+		.div-img span{color:#209800;}
+		#form{width: 90%;margin: 0 auto;}
+		.shuru {position: relative;margin-bottom: 10px;float: right;}
+		.shuru div {border: none;height: 50px;font-size: 25px;line-height: 25px;text-indent: 20px;outline: none;white-space: pre;overflow-x: scroll;}
+		.shuru span {position: absolute;top: 0px;font-size: 20px;}
+		.div-in {display: block;margin-top: 15px;padding: 15px;margin: 0 auto;width: 90%;border: 1px solid #CFCFCF;border-radius: 10px;background-color: #fff;}
+		.div-in p {font-size: 14px;}
+		.tablediv{position:fixed;bottom: 0px;left:0px;width:100%;background:#ffffff;color:#333333;font-size:52px;height:36%;}
+		.tablediv td{margin:0px;width:25%;font-size: 24px;text-align: center;border-right: 1px solid #e7e7e7; border-bottom: 1px solid #e7e7e7;}
+		.tablediv .pay {border-right:0px;font-size: 36px;color: white;background: #ff8a00;}
+		.tablediv .gray_btn {background: #c7c7c7;}
+
+		.div-input{width:90%;height:2.4rem;font-size:1rem;border:1px solid gray;background:#fff;line-height: 2.4rem;}
+	</style>
+</head>
+<body style="height: 100vh;background:#f2f3f7;">
+	<header>
+		<p>申请充值</p>
+	</header>
+	<section class="sect2" style="background:#dbd9e4;padding-top:1rem;">
+		<form action="/Order/orderadd" method="post" id="form" onsubmit="return checkForm();">
+			<div style="width:80%;margin:0 auto;">
+				<p style="color: green;font-size: 1.2rem;margin-bottom:6px;">金额(元)</p>
+				<div id="money" class="div-input">请输入充值金额</div>
+				<input class="pay gray_btn" rowspan="3" style="width:91%;height:2.4rem;font-size:1rem;border:none;outline: none;margin:20px 0;background: green;color: #fff;" type="button" value="提交">
+				<input type="hidden" placeholder="请输入数字金额，单位元" id="inpu" name="money" />
+			</div>
+		</form>
+	</section>
+	<table id="jianpan" class="tablediv layer-content" cellpadding="0px" cellspacing="0px">
+    		<tbody>
+    			<tr>
+    				<td ontouchstart="input(this)" ontouchend="canceltouch(this)" class="jisuanqi_btn" style=" background: rgb(255, 255, 255);">1</td>
+    				<td ontouchstart="input(this)" ontouchend="canceltouch(this)" class="jisuanqi_btn" style=" background: rgb(255, 255, 255);">2</td>
+    				<td ontouchstart="input(this)" ontouchend="canceltouch(this)" class="jisuanqi_btn" style=" background: rgb(255, 255, 255);">3</td>
+    			</tr>
+    		<tr>
+    			<td ontouchstart="input(this)" ontouchend="canceltouch(this)" class="jisuanqi_btn" style="background: rgb(255, 255, 255);">4</td>
+    			<td ontouchstart="input(this)" ontouchend="canceltouch(this)" class="jisuanqi_btn" style="background: rgb(255, 255, 255);">5</td>
+    			<td ontouchstart="input(this)" ontouchend="canceltouch(this)" class="jisuanqi_btn" style="background: rgb(255, 255, 255);">6</td>
+    		</tr>
+    		<tr>
+    			<td ontouchstart="input(this)" ontouchend="canceltouch(this)" class="jisuanqi_btn" style="background: rgb(255, 255, 255);">7</td>
+    			<td ontouchstart="input(this)" ontouchend="canceltouch(this)" class="jisuanqi_btn" style="background: rgb(255, 255, 255);">8</td>
+    			<td ontouchstart="input(this)" ontouchend="canceltouch(this)" class="jisuanqi_btn" style="background: rgb(255, 255, 255);">9</td>
+    		</tr>
+    		<tr>
+    			<td ontouchstart="input(this)" ontouchend="canceltouch(this)" class="jisuanqi_btn" style="background: rgb(255, 255, 255);">.</td>
+    			<td ontouchstart="input(this)" ontouchend="canceltouch(this)" class="jisuanqi_btn" style="background: rgb(255, 255, 255);">0</td>
+    			<td id="del" ontouchstart="input(this)" ontouchend="canceltouch(this)" class="jisuanqi_btn" style="background: rgb(255, 255, 255);">←</td>
+    		</tr>
+    	</tbody>
+    </table>
+<script src="http://code.jquery.com/jquery-latest.js"></script>
+<script type="text/javascript">
+	//键盘显示 隐藏
+	$('#money').click(function(e){
+		$('#money').html('');
+		$('#inpu').val('');
+		$('.layer-content').toggle(1000);
+	});
+	//表单提交
+	function checkForm(){
+		var money = $('#inpu').val();
+		if(money == ''){ 
+			alert('付款金额不能为空');
+			return false;
+		}else if(money == 0){
+			alert('付款金额不能为0');
+			return false;
+		}else return true;
+	}
+	$('.pay').click(function(){
+		$('#form').submit();
+	});
+	//付款不可点
+	function canceltouch(obj) {
+        $(obj).css("background", "#ffffff");
+    }
+    //键盘点击事件
+    var str='';
+    var temp='';
+    var pointflag=false;
+    var count=0;
+	function input(obj){
+			str = $("#money").html();
+
+			console.log(str)
+			$(".jisuanqi_btn").css("background", '#ffffff');
+			$(obj).css("background", "#d6d6d6");
+			temp = $(obj).text();
+			// console.log(temp)
+			if(temp == "." && pointflag == true){
+				return false;
+			}
+			if(temp == "." && pointflag ==false){
+				pointflag = true;
+			}
+			var moneyfloat;
+			//小数点后面只能有两位
+			if($(obj).attr("id")=="del"){
+				console.log('这是'+1)
+				if(str.substr(str.length-1,1)=="."){
+					pointflag = false;
+					count=0;
+				}
+				str=str.slice(0,-1);
+				if(pointflag == true){
+					if(count==4){
+						count = count-2;
+					}else{
+						count = count-1;
+					}
+				}
+				temp='';
+			}else {
+				console.log('这是'+2)
+				if(pointflag == true){
+					count++;
+					if(count >= 4){
+						count = 4;
+						return false;
+					}          						
+				}
+				if (str == "0" && temp == "0") {
+					return false;
+				}
+				str += temp; 
+				moneyfloat = parseFloat("0"+str);
+				if (moneyfloat > 9999999999) {
+					return;
+				}
+				if(str == "."){
+					str="0.";
+				}
+			};
+			moneyfloat = parseFloat("0"+str);
+			if (moneyfloat != 0) {
+				if ($("#pay_btn").hasClass("gray_btn")) {
+					$("#pay_btn").removeClass("gray_btn");
+				}
+			}else {
+				if (!$("#pay_btn").hasClass("gray_btn")) {
+					$("#pay_btn").addClass("gray_btn");
+				}
+			}
+			$("#money").html(str);
+			$('#inpu').val(str);
+		}
+</script>
+</body>
+</html>

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0">
+	<link rel="stylesheet" href="http://at.alicdn.com/t/font_520151_aqd1fhuzxw0442t9.css">
+	<title>个人中心</title>
+	<style>
+		html,body,div,p,input{margin:0;padding:0;}
+		header{width: 100%;text-align: center;padding-top:1rem;}
+		header img{width: 1.8rem;height: 1.8rem;border-radius:50%;border:.1rem solid #ddd7e0;}
+		.sec-div{position:relative;border-bottom:2px solid #bab5bc;width: 80%;margin:0 auto;height: 1.08rem;overflow: hidden;}
+		.sec-div .iconfont{color: #c3bcc3;font-size: .46rem;position: absolute;left: 6px;top:18px;}
+		.sec-div input{position: absolute;height:.8rem;width:85%;left:30px;bottom:0;font-size:.4rem;background:transparent;border:none;outline:none;color:#fff;}
+		input::placeholder, textarea::placeholder { color:#fff;font-size:.4rem;}
+		.but{width: 100%;border:none;outline: none;background:#b4aab3;height: 1.04rem;border-radius: 10px;color: #fff;font-size: .4rem;}
+	</style>
+</head>
+<body style="background: url(images/ent.png)no-repeat;background-size: 100% 100%;height: 100vh;">
+	<header>
+		<img src="images/hea.png" alt="">
+	</header>
+	<section style="width: 100%;padding-top:1.18rem;">
+		<div class="sec-div">
+			<i class="iconfont icon-zhanghao"></i> 
+			<input type="text" placeholder="请输入账号">
+		</div>
+		<div class="sec-div" style="margin-top: 10px;">
+			<i class="iconfont icon-mima1"></i> 
+			<input type="password" placeholder="请输入密码">
+		</div>
+	</section>
+	<section style="width: 100%;padding-top:2.3rem;">
+		<div style="width: 80%;margin:0 auto;">
+			<button class="but">登录</button>
+		</div>
+	</section>
+	<script>
+		window.onload = function(){
+            getRem(750,100)
+        };
+        window.onresize = function(){
+            getRem(750,100)
+        };
+	   function getRem(pwidth,prem){
+            var html = document.getElementsByTagName("html")[0];
+            var oWidth = document.body.clientWidth || document.documentElement.clientWidth;
+            html.style.fontSize = oWidth/pwidth*prem + "px";
+        }
+	</script>
+</body>
+</html>
